@@ -27,6 +27,7 @@ namespace HISK {
 
 		private void Update() {
 			inputAxis = Vector2.zero;
+			//Debug.Log(Input.GetKey(KeyCode.UpArrow));
 			if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) {
 				inputAxis += Vector2.up;
 			}
@@ -50,16 +51,16 @@ namespace HISK {
 
 		private void FixedUpdate() {
 			inputAxis = Vector2.zero;
-			if (Input.GetKey(KeyCode.W)) {
+			if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) {
 				inputAxis += Vector2.up;
 			}
-			if (Input.GetKey(KeyCode.S)) {
+			if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) {
 				inputAxis += Vector2.down;
 			}
-			if (Input.GetKey(KeyCode.A)) {
+			if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) {
 				inputAxis += Vector2.left;
 			}
-			if (Input.GetKey(KeyCode.D)) {
+			if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) {
 				inputAxis += Vector2.right;
 			}
 			if (inputAxis != Vector2.zero) {
