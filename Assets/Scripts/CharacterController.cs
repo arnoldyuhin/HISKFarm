@@ -10,7 +10,7 @@ namespace HISK {
 		[SerializeField] private bool isMoveDiagonal = true;
 		[SerializeField] private bool isMoveInGrid = false;
 		private bool isMoving = false;
-		
+
 		[SerializeField] private float moveSpeed = 1f;
 		[SerializeField] private Rigidbody2D rigidbody;
 		private Vector3 facingDirection = Vector3.down;
@@ -74,7 +74,7 @@ namespace HISK {
 				targetPos = currentPos + direction;
 				targetPos.x = Mathf.RoundToInt(targetPos.x);
 				targetPos.y = Mathf.RoundToInt(targetPos.y);
-				rigidbody.DOMove(targetPos, 1f/moveSpeed)
+				rigidbody.DOMove(targetPos, 1f / moveSpeed)
 					.OnComplete(() => {
 						isMoving = false;
 					});
@@ -100,7 +100,7 @@ namespace HISK {
 		}
 
 		private void IndicateCloestGrid() {
-			Vector3 targetPos = this.transform.position + facingDirection * 0.8f;
+			Vector3 targetPos = this.transform.position + facingDirection * 0f;
 
 			indicatorPosInt = new Vector3Int(Mathf.RoundToInt(targetPos.x), Mathf.RoundToInt(targetPos.y), Mathf.RoundToInt(targetPos.z));
 			Tilemap groundTileMap = TileMaster.Instance.GroundTileMap;
@@ -137,7 +137,20 @@ namespace HISK {
 
 		private void Dig() {
 			Tilemap groundTileMap = TileMaster.Instance.GroundTileMap;
-			groundTileMap.SetTile(indicatorPosInt, TileMaster.Instance.DitchTileBase);
+			TileBase tile = groundTileMap.GetTile(indicatorPosInt);
+			if (tile == null) return;
+			if (tile.name == "RT_Ditch") {
+				float possibilityToWater = 0.33f;
+				float randomSeed = Random.Range(0f, 1f);
+				if (randomSeed < possibilityToWater) {
+					groundTileMap.SetTile(indicatorPosInt, TileMaster.Instance.WaterTileBase);
+				} else {
+					groundTileMap.SetTile(indicatorPosInt, TileMaster.Instance.DitchTileBase);
+				}
+
+			} else {
+				groundTileMap.SetTile(indicatorPosInt, TileMaster.Instance.DitchTileBase);
+			}
 		}
 
 		private void Hoe() {
