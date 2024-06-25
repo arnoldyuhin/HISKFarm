@@ -61,10 +61,10 @@ namespace HISK {
 				TileBase downTile = GroundTileMap.GetTile(ditchTileCoor[i] + Vector3Int.down);
 				TileBase leftTile = GroundTileMap.GetTile(ditchTileCoor[i] + Vector3Int.left);
 
-				if (upTile.name == "RT_Water" ||
-					rightTile.name == "RT_Water" ||
-					downTile.name == "RT_Water" ||
-					leftTile.name == "RT_Water") {
+				if ((upTile != null && upTile.name == "RT_Water") ||
+					(rightTile != null && rightTile.name == "RT_Water")||
+					(downTile != null && downTile.name == "RT_Water") ||
+					(leftTile != null && leftTile.name == "RT_Water")) { 
 					waterFlowTileCoor.Add(ditchTileCoor[i]);
 				}
 			}
